@@ -19,7 +19,8 @@ const categories = [
   'Soup',
   'Snacks',
   'Protein',
-  'Drinks'
+  'Drinks',
+  'Side Food'
 ]
 
 const menu = [
@@ -99,8 +100,17 @@ const menu = [
   { category: 'Drinks', name: '50cl Orange', price: 1500, image: '/images/menu/50cl-orange.jpg', description: 'Fresh orange drink.' },
   { category: 'Drinks', name: 'Watermelon', price: 1500, image: '/images/menu/watermelon.jpg', description: 'Fresh watermelon drink.' },
   { category: 'Drinks', name: '50cl Pineapple', price: 1500, image: '/images/menu/50cl-pineapple.jpg', description: 'Fresh pineapple drink.' },
-  { category: 'Drinks', name: '50cl Tigernut', price: 2000, image: '/images/menu/50cl-tigernut.jpg', description: 'Fresh tigernut drink.' }
+  { category: 'Drinks', name: '50cl Tigernut', price: 2000, image: '/images/menu/50cl-tigernut.jpg', description: 'Fresh tigernut drink.' },
+
+
+  //SIDE FOOD
+  { category: 'Side Food', name: 'Plantain', price: 500, image: '/images/menu/plantain.jpg', description: 'Delicious fried plantain.' },
+  { category: 'Side Food', name: 'Medium moi-moi', price: 500, image: '/images/menu/medium-moimoi.jpg', description: 'Delicious Nigerian-style moimoi.' },
+  { category: 'Side Food', name: 'Big moi-moi', price: 1000, image: '/images/menu/big-moimoi.jpg', description: 'Delicious Nigerian-style moimoi.' },
+  { category: 'Side Food', name: 'Salad', price: 500, image: '/images/menu/salad.jpg', description: 'yommy salad.' },
+
 ]
+
 
 const filteredMenu = computed(() =>
   menu.filter(item => item.category === selectedCategory.value)
@@ -817,11 +827,15 @@ const whatsappOrder = () => {
           <div class="contact-icon">📍</div>
 
           <div>
-            <h3>Our Location</h3>
+            <h3>Our Location </h3>
             <p>
               Plot 414, Phase 2, FHA Lugbe,<br>
-              Khai Medics Complex,<br>
+              Khia Medics Complex,<br>
               by the Police Signboard, Abuja.
+            </p>
+            <H4>Second Branch</H4>
+            <p>
+              HOUSE 19, 4th Avenue, PHASE I, FHA, Lugbe, Abuja,
             </p>
           </div>
         </div>
@@ -991,6 +1005,7 @@ const whatsappOrder = () => {
       <a href="#menu">Snacks</a>
       <a href="#menu">Protein</a>
       <a href="#menu">Drinks</a>
+      <a href="#menu">Side Food</a>
     </div>
 
 
