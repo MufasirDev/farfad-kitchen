@@ -43,6 +43,7 @@ const menu = [
   { category: 'Swallow', name: 'Semo', price: 500, image: '/images/menu/semo.jpg', description: 'Soft and smooth semovita.' },
   { category: 'Swallow', name: 'Pounded Yam', price: 700, image: '/images/menu/pounded-yam.jpg', description: 'Smooth traditional pounded yam.' },
   { category: 'Swallow', name: 'Amala', price: 500, image: '/images/menu/amala.jpg', description: 'Authentic Nigerian amala.' },
+  { category: 'Swallow', name: 'Agidi', price: 300, image: '/images/menu/Agidi.jpg', description: 'Authentic Nigerian agidi.' },
 
   // SOUP
   { category: 'Soup', name: 'White Okro', price: 500, image: '/images/menu/white-okro.jpg', description: 'Fresh and tasty white okro soup.' },
