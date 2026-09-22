@@ -1,5 +1,6 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { supabase } from './lib/supabase'
 
 const mobileMenuOpen = ref(false)
 
@@ -120,7 +121,106 @@ const filteredMenu = computed(() =>
 const formatPrice = (price) =>
   new Intl.NumberFormat('en-NG').format(price)
 
+
+const reviewSubmitted = ref(false)
+  const reviewForm = ref({
+  name: '',
+  rating: 0,
+  comment: ''
+})
+
+const reviews = ref([])
+
+const fetchApprovedReviews = async () => {
+  const { data, error } = await supabase
+    .from('reviews')
+    .select('id, name, rating, comment, created_at')
+    .eq('approved', true)
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    console.error('Reviews fetch error:', error.message)
+    return
+  }
+
+  reviews.value = data || []
+}
+
+onMounted(fetchApprovedReviews)
+
+const submitReview = async () => {
+  if (
+    !reviewForm.value.name.trim() ||
+    !reviewForm.value.comment.trim() ||
+    reviewForm.value.rating === 0
+  ) {
+    return
+  }
+
+  const { error } = await supabase
+    .from('reviews')
+    .insert({
+      name: reviewForm.value.name.trim(),
+      rating: reviewForm.value.rating,
+      comment: reviewForm.value.comment.trim()
+    })
+
+if (error) {
+  console.error('Review submission error:', error.message)
+  console.error('Full Supabase error:', error)
+
+  alert(`Review failed: ${error.message}`)
+  return
+}
+
+  reviewSubmitted.value = true
+
+setTimeout(() => {
+  reviewSubmitted.value = false
+}, 3500)
+
+  reviewForm.value = {
+    name: '',
+    rating: 0,
+    comment: ''
+  }
+}
+
   const order = ref([])
+
+  const orderMethod = ref('Pickup')
+
+const takeoutFee = (item) => {
+  // Snacks, Drinks, Protein and Side Food have no takeout fee
+  if (
+    item.category === 'Snacks' ||
+    item.category === 'Drinks' ||
+    item.category === 'Protein' ||
+    item.category === 'Side Food'
+  ) {
+    return 0
+  }
+
+  // Amala has ₦400 takeout
+  if (item.name.toLowerCase() === 'amala') {
+    return 400
+  }
+
+  // Other Food, Swallow and Soup items have ₦200 takeout
+  return 200
+}
+
+const totalTakeout = computed(() => {
+  return order.value.reduce(
+    (total, item) =>
+      total + takeoutFee(item),
+    0
+  )
+})
+
+const orderGrandTotal = computed(() => {
+  return orderTotal.value + totalTakeout.value
+})
 
 const addToOrder = (item) => {
   const existingItem = order.value.find(
@@ -181,19 +281,32 @@ const orderTotal = computed(() => {
 const whatsappOrder = () => {
   if (order.value.length === 0) return
 
-  let message =
-    `Hello Farfad Kitchen! 👋\n\n` +
-    `I would like to place an order:\n\n`
+  let message = `Hello Farfad Kitchen! 👋\n\n`
+  message += `I would like to place an order:\n\n`
 
   order.value.forEach(item => {
-    message +=
-      `${item.name} x${item.quantity} - ₦${formatPrice(
-        item.price * item.quantity
-      )}\n`
+    const itemTotal = item.price * item.quantity
+    const itemTakeout = takeoutFee(item) 
+
+    message += `🍽️ ${item.name} x${item.quantity}\n`
+    message += `   Food: ₦${formatPrice(itemTotal)}\n`
+    message += `   Takeout: ₦${formatPrice(itemTakeout)}\n\n`
   })
 
-  message +=
-    `\nTotal: ₦${formatPrice(orderTotal.value)}`
+  message += `--------------------------\n`
+  message += `Food Total: ₦${formatPrice(orderTotal.value)}\n`
+  message += `Takeout: ₦${formatPrice(totalTakeout.value)}\n`
+  message += `Total: ₦${formatPrice(orderGrandTotal.value)}\n\n`
+
+  message += `📦 Order Method: ${orderMethod.value}\n`
+
+  if (orderMethod.value === 'Delivery') {
+    message += `🚚 Delivery Fee: To be confirmed on WhatsApp\n`
+  } else {
+    message += `🏪 Pickup: Farfad Kitchen\n`
+  }
+
+  message += `\nThank you! ❤️`
 
   const whatsappUrl =
     `https://wa.me/2347012920913?text=${encodeURIComponent(message)}`
@@ -424,6 +537,37 @@ const whatsappOrder = () => {
   <div v-if="order.length > 0" class="order-box">
 
   <div class="order-header">
+  <div class="order-method">
+  <h4>How would you like to receive your order?</h4>
+
+  <div class="order-method-options">
+    <button
+      type="button"
+      class="order-method-btn"
+      :class="{ active: orderMethod === 'Pickup' }"
+      @click="orderMethod = 'Pickup'"
+    >
+      <span>🏪</span>
+      <div>
+        <strong>Pickup</strong>
+        <small>Pick up from Farfad Kitchen</small>
+      </div>
+    </button>
+
+    <button
+      type="button"
+      class="order-method-btn"
+      :class="{ active: orderMethod === 'Delivery' }"
+      @click="orderMethod = 'Delivery'"
+    >
+      <span>🛵</span>
+      <div>
+        <strong>Delivery</strong>
+        <small>Delivery fee confirmed on WhatsApp</small>
+      </div>
+    </button>
+  </div>
+</div>
     <div>
       <p class="section-tag">YOUR ORDER</p>
       <h3>Order Summary</h3>
@@ -468,10 +612,29 @@ const whatsappOrder = () => {
 
   </div>
 
-  <div class="order-total">
-    <span>Total</span>
+  <div class="order-price-breakdown">
+
+  <div class="price-row">
+    <span>Food Total</span>
     <strong>₦{{ formatPrice(orderTotal) }}</strong>
   </div>
+
+  <div class="price-row">
+    <span>Takeout</span>
+    <strong>₦{{ formatPrice(totalTakeout) }}</strong>
+  </div>
+
+  <div class="price-row delivery-note" v-if="orderMethod === 'Delivery'">
+    <span>Delivery Fee</span>
+    <strong>To be confirmed</strong>
+  </div>
+
+  <div class="order-total">
+    <span>Total</span>
+    <strong>₦{{ formatPrice(orderGrandTotal) }}</strong>
+  </div>
+
+</div>
 
   <button class="whatsapp-order-btn" @click="whatsappOrder">
     Order on WhatsApp
@@ -743,12 +906,157 @@ const whatsappOrder = () => {
             <h3>Happy Customer</h3>
             <span>Farfad Kitchen Customer</span>
           </div>
-        </div>
+          </div>
       </article>
+          <!-- CUSTOMER REVIEWS FROM SUPABASE -->
+<article
+  v-for="review in reviews"
+  :key="review.id"
+  class="testimonial-card"
+>
+  <div class="testimonial-stars">
+    {{ '★'.repeat(review.rating) }}{{ '☆'.repeat(5 - review.rating) }}
+  </div>
+
+  <p class="testimonial-text">
+    “{{ review.comment }}”
+  </p>
+
+  <div class="testimonial-person">
+    <div class="testimonial-avatar">
+      {{ review.name.charAt(0).toUpperCase() }}
+    </div>
+
+    <div>
+      <h3>{{ review.name }}</h3>
+      <span>Farfad Kitchen Customer</span>
+    </div>
+  </div>
+</article>
+        </div>
+      
+
+<!-- CUSTOMER REVIEW SECTION -->
+
+<section id="reviews" class="review-section">
+  <div v-if="reviewSubmitted" class="review-success-overlay">
+  <div class="review-success-popup">
+
+    <div class="celebration-icon">
+      🎉
+    </div>
+
+    <div class="celebration-stars">
+      ★ ★ ★ ★ ★
+    </div>
+
+    <h2>Thank You! ❤️</h2>
+
+    <p>
+      Your review means a lot to us.
+      Thank you for sharing your experience
+      with Farfad Kitchen!
+    </p>
+
+    <button
+      type="button"
+      class="close-review-popup"
+      @click="reviewSubmitted = false"
+    >
+      Continue
+    </button>
+
+  </div>
+</div>
+  <div class="review-container">
+
+    <div class="section-heading review-heading">
+      <p class="section-tag">SHARE YOUR EXPERIENCE</p>
+
+      <h2>
+        Tell Us What You
+        <span>Think</span>
+      </h2>
+
+      <p>
+        We would love to hear about your experience at Farfad Kitchen.
+        Your feedback helps us serve you better.
+      </p>
+    </div>
+
+    <div class="review-card">
+
+      <form @submit.prevent="submitReview">
+
+        <!-- NAME -->
+        <div class="review-field">
+          <label for="review-name">Your Name</label>
+
+          <input
+            id="review-name"
+            v-model="reviewForm.name"
+            type="text"
+            placeholder="Enter your name"
+            required
+          >
+        </div>
+
+        <!-- RATING -->
+        <div class="review-field">
+          <label>Rate Your Experience</label>
+
+          <div class="star-rating">
+
+            <button
+              v-for="star in 5"
+              :key="star"
+              type="button"
+              class="star-btn"
+              :class="{ selected: star <= reviewForm.rating }"
+              @click="reviewForm.rating = star"
+              :aria-label="`${star} star${star > 1 ? 's' : ''}`"
+            >
+              ★
+            </button>
+
+          </div>
+
+          <small v-if="reviewForm.rating > 0">
+            {{ reviewForm.rating }} out of 5
+          </small>
+        </div>
+
+        <!-- COMMENT -->
+        <div class="review-field">
+          <label for="review-comment">Your Review</label>
+
+          <textarea
+            id="review-comment"
+            v-model="reviewForm.comment"
+            rows="5"
+            placeholder="Tell us about your food and service..."
+            required
+          ></textarea>
+        </div>
+
+        <!-- SUBMIT -->
+        <button
+          type="submit"
+          class="submit-review-btn"
+          :disabled="reviewForm.rating === 0"
+        >
+          ⭐ Submit Review
+        </button>
+
+      </form>
 
     </div>
 
   </div>
+</section>
+    </div>
+
+
 </section>
       
 
@@ -834,7 +1142,7 @@ const whatsappOrder = () => {
               Khia Medics Complex,<br>
               by the Police Signboard, Abuja.
             </p>
-            <H4>Second Branch</H4>
+            <h4>Second Branch</h4>
             <p>
               HOUSE 19, 4th Avenue, PHASE I, FHA, Lugbe, Abuja,
             </p>
