@@ -13,6 +13,7 @@ const closeMobileMenu = () => {
 }
 
 const selectedCategory = ref('Food')
+const menuSearch = ref('')
 
 const categories = [
   'Food',
@@ -114,9 +115,23 @@ const menu = [
 ]
 
 
-const filteredMenu = computed(() =>
-  menu.filter(item => item.category === selectedCategory.value)
-)
+const filteredMenu = computed(() => {
+  const search = menuSearch.value.trim().toLowerCase()
+
+  // No search → show selected category
+  if (!search) {
+    return menu.filter(
+      item => item.category === selectedCategory.value
+    )
+  }
+
+  // Search → search across the entire menu
+  return menu.filter(item =>
+    item.name.toLowerCase().includes(search) ||
+    item.description.toLowerCase().includes(search) ||
+    item.category.toLowerCase().includes(search)
+  )
+})
 
 const formatPrice = (price) =>
   new Intl.NumberFormat('en-NG').format(price)
@@ -493,6 +508,13 @@ const whatsappOrder = () => {
     </p>
   </div>
 
+<div class="menu-search">
+  <input
+    v-model="menuSearch"
+    type="text"
+    placeholder="🔍 Search for a meal, drink, snack..."
+  >
+</div>
   <div class="menu-tabs">
     <button
       v-for="category in categories"
