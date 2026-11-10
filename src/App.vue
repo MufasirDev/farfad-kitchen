@@ -341,7 +341,9 @@ const whatsappOrder = () => {
     <a href="#home" class="logo">
       <img
         src="/images/farfad-logo.png"
-        alt="Farfad Kitchen"
+        alt="Farfad Kitchen logo"
+        width="160"
+        height="60"
       >
     </a>
     
@@ -398,13 +400,13 @@ const whatsappOrder = () => {
     </div>
 
     <h1>
-      Taste the Best of
-      <span>Naija</span>
+      Nigerian Restaurant in <span>Lugbe, Abuja</span>
     </h1>
     
     <p>
-      Delicious Nigerian meals, refreshing drinks and quality service —
-      freshly prepared for you at Farfad Kitchen.
+      Enjoy delicious Nigerian meals, traditional soups, rice dishes,
+      swallow, snacks and refreshing drinks at Farfad Kitchen.
+      Visit either of our two FHA Lugbe branches or order your favourites on WhatsApp.
     </p>
 
     <div class="hero-buttons">
@@ -504,7 +506,8 @@ const whatsappOrder = () => {
     <p class="section-tag">OUR MENU</p>
     <h2>Something Delicious <span>For Everyone</span></h2>
     <p>
-      Freshly prepared meals, delicious proteins, snacks and refreshing drinks.
+      Explore Farfad Kitchen's menu of Nigerian rice dishes, amala, fufu,
+      traditional soups, proteins, snacks and refreshing drinks in Lugbe, Abuja.
     </p>
   </div>
 
@@ -534,7 +537,7 @@ const whatsappOrder = () => {
       class="real-food-card"
     >
       <div class="real-food-image">
-        <img :src="item.image" :alt="item.name">
+        <img :src="item.image" :alt="`${item.name} - ${item.description} at Farfad Kitchen, Lugbe, Abuja`" loading="lazy" decoding="async">
         <span class="food-category">{{ item.category }}</span>
       </div>
 
@@ -606,7 +609,7 @@ const whatsappOrder = () => {
       class="order-item"
     >
       <div class="order-item-info">
-        <img :src="item.image" :alt="item.name">
+        <img :src="item.image" :alt="`${item.name} - ${item.description} at Farfad Kitchen, Lugbe, Abuja`" loading="lazy" decoding="async">
 
         <div>
           <h4>{{ item.name }}</h4>
@@ -673,7 +676,9 @@ const whatsappOrder = () => {
     <div class="about-image">
       <img
         src="/images/farfad-building.png"
-        alt="Farfad Kitchen restaurant"
+        alt="Farfad Kitchen restaurant in FHA Lugbe, Abuja"
+        loading="lazy"
+        decoding="async"
       >
 
       <div class="about-image-badge">
@@ -769,7 +774,9 @@ const whatsappOrder = () => {
       <div class="gallery-item gallery-large">
         <img
           src="/images/farfad-building.png"
-          alt="Farfad Kitchen restaurant"
+          alt="Farfad Kitchen restaurant location in FHA Lugbe, Abuja"
+          loading="lazy"
+          decoding="async"
         >
 
         <div class="gallery-overlay">
@@ -784,7 +791,9 @@ const whatsappOrder = () => {
       <div class="gallery-item">
         <img
           src="/images/menu/jollof-rice.jpg"
-          alt="Jollof rice"
+          alt="Nigerian jollof rice served at Farfad Kitchen in Lugbe, Abuja"
+          loading="lazy"
+          decoding="async"
         >
 
         <div class="gallery-overlay">
@@ -799,7 +808,9 @@ const whatsappOrder = () => {
       <div class="gallery-item">
         <img
           src="/images/menu/fried-rice.jpg"
-          alt="Fried rice"
+          alt="Fried rice at Farfad Kitchen, FHA Lugbe, Abuja"
+          loading="lazy"
+          decoding="async"
         >
 
         <div class="gallery-overlay">
@@ -814,7 +825,9 @@ const whatsappOrder = () => {
       <div class="gallery-item">
         <img
           src="/images/menu/chicken.jpg"
-          alt="Chicken"
+          alt="Chicken meal at Farfad Kitchen in Lugbe, Abuja"
+          loading="lazy"
+          decoding="async"
         >
 
         <div class="gallery-overlay">
@@ -829,7 +842,9 @@ const whatsappOrder = () => {
       <div class="gallery-item">
         <img
           src="/images/menu/egusi.jpg"
-          alt="Egusi soup"
+          alt="Traditional Nigerian egusi soup at Farfad Kitchen, Abuja"
+          loading="lazy"
+          decoding="async"
         >
 
         <div class="gallery-overlay">
@@ -1158,16 +1173,33 @@ const whatsappOrder = () => {
           <div class="contact-icon">📍</div>
 
           <div>
-            <h3>Our Location </h3>
-            <p>
+            <h3>Visit Our Two Lugbe Branches</h3>
+
+            <h4>Branch 1 – Khia Medics Complex</h4>
+            <address>
               Plot 414, Phase 2, FHA Lugbe,<br>
-              Khia Medics Complex,<br>
-              by the Police Signboard, Abuja.
-            </p>
-            <h4>Second Branch</h4>
-            <p>
-              HOUSE 19, 4th Avenue, PHASE I, FHA, Lugbe, Abuja,
-            </p>
+              Khia Medics Complex, by the Police Signboard,<br>
+              Abuja, Nigeria.
+            </address>
+            <a href="https://maps.app.goo.gl/C4bigmzxzqxxoKXz5"
+               target="_blank" rel="noopener noreferrer"
+               aria-label="Get directions to Farfad Kitchen at Khia Medics Complex, FHA Lugbe">
+              Get directions to Branch 1 →
+            </a>
+
+            <h4>Branch 2 – 4th Avenue</h4>
+            <address>
+              House 19, 4th Avenue, Phase I,<br>
+              FHA Lugbe, Abuja, Nigeria.
+            </address>
+            <a href="https://maps.app.goo.gl/iYubywKQ7jXH9Z5N9"
+               target="_blank" rel="noopener noreferrer"
+               aria-label="Get directions to Farfad Kitchen at 4th Avenue, FHA Lugbe">
+              Get directions to Branch 2 →
+            </a>
+
+            <h4>Opening Hours</h4>
+            <p>Monday – Sunday: 8:00 AM – 11:00 PM</p>
           </div>
         </div>
 
@@ -1205,14 +1237,24 @@ const whatsappOrder = () => {
 
       </div>
 
-      <a
-        class="direction-btn"
-        href="https://www.google.com/maps/search/?api=1&query=Plot+414+Phase+2+FHA+Lugbe+Abuja"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        📍 Get Directions
-      </a>
+      <div class="branch-directions" aria-label="Directions to Farfad Kitchen branches">
+        <a
+          class="direction-btn"
+          href="https://maps.app.goo.gl/C4bigmzxzqxxoKXz5"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          📍 Directions to Branch 1
+        </a>
+        <a
+          class="direction-btn"
+          href="https://maps.app.goo.gl/iYubywKQ7jXH9Z5N9"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          📍 Directions to Branch 2
+        </a>
+      </div>
 
     </div>
 
@@ -1220,7 +1262,9 @@ const whatsappOrder = () => {
 
       <img
         src="/images/farfad-building.png"
-        alt="Farfad Kitchen"
+        alt="Farfad Kitchen restaurant in FHA Lugbe, Abuja"
+        loading="lazy"
+        decoding="async"
       >
 
       <div class="contact-location-card">
@@ -1345,10 +1389,16 @@ const whatsappOrder = () => {
       <h3>Visit Us</h3>
 
       <p>
-        📍 Plot 414, Phase 2, FHA Lugbe,
-        Khai Medics Complex,
-        by the Police Signboard, Abuja.
+        <strong>Branch 1:</strong> Plot 414, Phase 2, FHA Lugbe,
+        Khia Medics Complex, by the Police Signboard, Abuja.
       </p>
+      <p>
+        <strong>Branch 2:</strong> House 19, 4th Avenue,
+        Phase I, FHA Lugbe, Abuja.
+      </p>
+      <p><strong>Opening hours:</strong> Every day, 8:00 AM – 11:00 PM.</p>
+      <a href="https://maps.app.goo.gl/C4bigmzxzqxxoKXz5" target="_blank" rel="noopener noreferrer">📍 Branch 1 directions</a>
+      <a href="https://maps.app.goo.gl/iYubywKQ7jXH9Z5N9" target="_blank" rel="noopener noreferrer">📍 Branch 2 directions</a>
 
       <a href="tel:07012920913">
         📞 07012920913

@@ -1,11 +1,150 @@
+
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/images/farfad-logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Farfad Kitchen | Taste the Best of Naija</title>
+
+    <!-- Primary SEO -->
+    <title>Farfad Kitchen | Nigerian Restaurant in Lugbe, Abuja</title>
+
+    <meta
+      name="description"
+      content="Enjoy delicious Nigerian meals at Farfad Kitchen in FHA Lugbe, Abuja. Visit our two branches for tasty local dishes, quality food and convenient service. Open daily from 8 AM to 11 PM."
+    />
+
+    <meta
+      name="keywords"
+      content="Farfad Kitchen, restaurant in Lugbe, restaurants in Abuja, Nigerian food in Abuja, food in FHA Lugbe, amala in Lugbe, Nigerian restaurant Abuja, food near me"
+    />
+
+    <meta name="author" content="Farfad Kitchen" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://realfarfadkitchen.com/" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/images/farfad-logo.png" />
+    <link rel="apple-touch-icon" href="/images/farfad-logo.png" />
+
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Farfad Kitchen" />
+    <meta
+      property="og:title"
+      content="Farfad Kitchen | Taste the Best of Naija"
+    />
+    <meta
+      property="og:description"
+      content="Enjoy delicious Nigerian meals at Farfad Kitchen. Find our two branches in FHA Lugbe, Abuja. Open daily from 8 AM to 11 PM."
+    />
+    <meta property="og:url" content="https://realfarfadkitchen.com/" />
+    <meta
+      property="og:image"
+      content="https://realfarfadkitchen.com/images/farfad-logo.png"
+    />
+    <meta property="og:image:alt" content="Farfad Kitchen restaurant logo" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Farfad Kitchen | Nigerian Restaurant in Abuja"
+    />
+    <meta
+      name="twitter:description"
+      content="Discover delicious Nigerian meals at Farfad Kitchen in FHA Lugbe, Abuja. Open daily from 8 AM to 11 PM."
+    />
+    <meta
+      name="twitter:image"
+      content="https://realfarfadkitchen.com/images/farfad-logo.png"
+    />
+
+    <!-- Restaurant Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://realfarfadkitchen.com/#organization",
+            "name": "Farfad Kitchen",
+            "url": "https://realfarfadkitchen.com/",
+            "logo": "https://realfarfadkitchen.com/images/farfad-logo.png"
+          },
+          {
+            "@type": "Restaurant",
+            "@id": "https://realfarfadkitchen.com/#branch-one",
+            "name": "Farfad Kitchen",
+            "url": "https://realfarfadkitchen.com/",
+            "parentOrganization": {
+              "@id": "https://realfarfadkitchen.com/#organization"
+            },
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Plot 414, Phase 2, FHA Lugbe, Khia Medics Complex, by the Police Signboard",
+              "addressLocality": "Lugbe",
+              "addressRegion": "Federal Capital Territory",
+              "addressCountry": "NG"
+            },
+            "hasMap": "https://maps.app.goo.gl/C4bigmzxzqxxoKXz5",
+            "openingHoursSpecification": [
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday",
+                  "Sunday"
+                ],
+                "opens": "08:00",
+                "closes": "23:00"
+              }
+            ]
+          },
+          {
+            "@type": "Restaurant",
+            "@id": "https://realfarfadkitchen.com/#branch-two",
+            "name": "Farfad Kitchen",
+            "url": "https://realfarfadkitchen.com/",
+            "parentOrganization": {
+              "@id": "https://realfarfadkitchen.com/#organization"
+            },
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "House 19, 4th Avenue, Phase I, FHA Lugbe",
+              "addressLocality": "Lugbe",
+              "addressRegion": "Federal Capital Territory",
+              "addressCountry": "NG"
+            },
+            "hasMap": "https://maps.app.goo.gl/iYubywKQ7jXH9Z5N9",
+            "openingHoursSpecification": [
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday",
+                  "Sunday"
+                ],
+                "opens": "08:00",
+                "closes": "23:00"
+              }
+            ]
+          }
+        ]
+      }
+    </script>
   </head>
+
   <body>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
